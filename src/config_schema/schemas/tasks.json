@@ -1,0 +1,56 @@
+{
+  "description": "Project tasks, listed in F6 beside the ones Lightdown finds.",
+  "schema": {
+    "type": "object",
+    "required": ["tasks"],
+    "properties": {
+      "tasks": {
+        "type": "array",
+        "maxItems": 128,
+        "x-unique": "name",
+        "description": "The tasks, each with a unique name.",
+        "items": {
+          "type": "object",
+          "required": ["name"],
+          "x-one-of": ["argv", "shell"],
+          "properties": {
+            "name": {"type": "string", "minLength": 1, "description": "The task's name in F6."},
+            "argv": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "The program and its arguments, run without a shell. Give this or shell."},
+            "shell": {"type": "string", "description": "A command line run with sh -c. Give this or argv."},
+            "cwd": {"type": "string", "default": ".", "description": "The folder to run in, from the project root. It must exist."},
+            "env": {
+              "type": "object",
+              "propertyNames": {"pattern": "^[A-Za-z_][A-Za-z0-9_]*$", "patternMessage": "is not a valid environment variable name"},
+              "additionalProperties": {"type": "string", "description": "An environment variable's value."},
+              "description": "Environment variables to add."
+            },
+            "dependsOn": {"type": "array", "items": {"type": "string", "minLength": 1}, "description": "Tasks to run first, in order; a background task counts once it is ready."},
+            "problemMatcher": {"type": "string", "minLength": 1, "description": "A regular expression with named groups file and line, and optionally column, severity and message, for errors in the output."},
+            "watch": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {"type": "string", "minLength": 1, "pattern": "^(?:(?:[^/.][^/]*|\\.|\\.[^/.][^/]*|\\.\\.[^/]+)/)*(?:[^/.][^/]*|\\.|\\.[^/.][^/]*|\\.\\.[^/]+)$", "patternMessage": "must be a relative glob that stays in the project"},
+              "description": "Globs; saving a matching file runs the task again."
+            },
+            "background": {
+              "type": "object",
+              "required": ["readyPattern"],
+              "properties": {
+                "readyPattern": {"type": "string", "minLength": 1, "description": "A regular expression; the task counts as ready when a line of its output matches."}
+              },
+              "description": "For servers and watchers: the task keeps running, and tasks that depend on it start once it is ready."
+            }
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "tasks": [
+      {"name": "db", "argv": ["docker", "compose", "up", "db"], "background": {"readyPattern": "ready to accept connections"}},
+      {"name": "serve", "shell": "cargo run", "dependsOn": ["db"], "watch": ["src/**/*.rs"], "background": {"readyPattern": "listening on"}},
+      {"name": "check", "argv": ["cargo", "check"], "problemMatcher": "(?P<file>[^:]+):(?P<line>[0-9]+):(?P<column>[0-9]+): (?P<message>.+)"}
+    ]
+  }
+}

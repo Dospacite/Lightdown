@@ -1,0 +1,100 @@
+{
+  "description": "Native debug configurations, started by Debug: Start native debugger. One configuration, or several named ones.",
+  "schema": {
+    "type": "object",
+    "x-one-of": ["adapter", "type", "configurations"],
+    "properties": {
+        "name": {"type": "string", "minLength": 1, "description": "The configuration's name, unique in the file."},
+        "type": {
+          "type": "string",
+          "enum": ["lldb", "rust", "c", "cpp", "lldb-dap", "codelldb", "gdb", "go", "delve", "dlv", "node", "pwa-node", "javascript", "js-debug", "python", "debugpy"],
+          "description": "The kind of program; Lightdown finds an installed adapter for it when adapter is left out."
+        },
+        "request": {"type": "string", "enum": ["launch", "attach"], "default": "launch", "description": "Start the program, or attach to one that runs."},
+        "adapter": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"},
+          "description": "The adapter's command and arguments. {port} becomes a free loopback port for tcp."
+        },
+        "transport": {
+          "type": "string",
+          "enum": ["stdio", "tcp"],
+          "default": "stdio",
+          "description": "How Lightdown talks to the adapter: over its standard streams, or a TCP port."
+        },
+        "launch": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "The launch or attach request's arguments, passed to the adapter unchanged after ${workspaceFolder}, ${file}, ${fileDirname}, ${relativeFile} and ${env:NAME} are filled in."
+        },
+        "preLaunchTask": {"type": "string", "minLength": 1, "description": "A project task (F6) that must succeed before the adapter starts."},
+        "cargo": {
+          "type": "object",
+          "required": ["args"],
+          "properties": {
+            "args": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Cargo's arguments, such as [\"build\", \"--bin\", \"app\"]."}
+          },
+          "description": "Build with Cargo first and debug the executable it produces."
+        },
+        "exceptionFilters": {"type": "array", "items": {"type": "string"}, "description": "The adapter's exception breakpoint filters to turn on."},
+        "breakOnPanic": {"type": "boolean", "default": false, "description": "Stop when a Rust program panics."},
+        "default": {"type": "string", "description": "The configuration to start when none is chosen."},
+        "configurations": {
+          "type": "array",
+          "minItems": 1,
+          "x-unique": "name",
+          "description": "Named configurations; Debug: Select named configuration chooses one.",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "x-one-of": ["adapter", "type"],
+            "properties": {
+                "name": {"type": "string", "minLength": 1, "description": "The configuration's name, unique in the file."},
+                "type": {
+                  "type": "string",
+                  "enum": ["lldb", "rust", "c", "cpp", "lldb-dap", "codelldb", "gdb", "go", "delve", "dlv", "node", "pwa-node", "javascript", "js-debug", "python", "debugpy"],
+                  "description": "The kind of program; Lightdown finds an installed adapter for it when adapter is left out."
+                },
+                "request": {"type": "string", "enum": ["launch", "attach"], "default": "launch", "description": "Start the program, or attach to one that runs."},
+                "adapter": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {"type": "string"},
+                  "description": "The adapter's command and arguments. {port} becomes a free loopback port for tcp."
+                },
+                "transport": {
+                  "type": "string",
+                  "enum": ["stdio", "tcp"],
+                  "default": "stdio",
+                  "description": "How Lightdown talks to the adapter: over its standard streams, or a TCP port."
+                },
+                "launch": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "description": "The launch or attach request's arguments, passed to the adapter unchanged after ${workspaceFolder}, ${file}, ${fileDirname}, ${relativeFile} and ${env:NAME} are filled in."
+                },
+                "preLaunchTask": {"type": "string", "minLength": 1, "description": "A project task (F6) that must succeed before the adapter starts."},
+                "cargo": {
+                  "type": "object",
+                  "required": ["args"],
+                  "properties": {
+                    "args": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "Cargo's arguments, such as [\"build\", \"--bin\", \"app\"]."}
+                  },
+                  "description": "Build with Cargo first and debug the executable it produces."
+                },
+                "exceptionFilters": {"type": "array", "items": {"type": "string"}, "description": "The adapter's exception breakpoint filters to turn on."},
+                "breakOnPanic": {"type": "boolean", "default": false, "description": "Stop when a Rust program panics."}
+            }
+          }
+        }
+    }
+  },
+  "example": {
+    "default": "app",
+    "configurations": [
+      {"name": "app", "type": "lldb", "cargo": {"args": ["build", "--bin", "app"]}, "launch": {"cwd": "${workspaceFolder}", "args": []}},
+      {"name": "attach", "adapter": ["lldb-dap"], "request": "attach", "launch": {"pid": 0}}
+    ]
+  }
+}

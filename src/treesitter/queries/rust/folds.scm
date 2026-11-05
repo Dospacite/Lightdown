@@ -1,0 +1,27 @@
+; Lightdown queries for the pinned rust grammar.
+(array_expression) @fold
+(array_type) @fold
+(async_block) @fold
+(block) @fold
+(block_comment) @fold
+(const_block) @fold
+(declaration_list) @fold
+(enum_item) @fold
+(enum_variant_list) @fold
+(expression_statement) @fold
+(field_declaration_list) @fold
+(field_initializer_list) @fold
+(function_item) @fold
+(function_signature_item) @fold
+(gen_block) @fold
+(macro_definition) @fold
+(match_block) @fold
+(mod_item) @fold
+(ordered_field_declaration_list) @fold
+(scoped_use_list) @fold
+(struct_item) @fold
+(trait_item) @fold
+(try_block) @fold
+(union_item) @fold
+(unsafe_block) @fold
+(use_list) @fold

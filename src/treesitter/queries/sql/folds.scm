@@ -1,0 +1,24 @@
+; Lightdown queries for the pinned sql grammar.
+(alter_sequence) @fold
+(array) @fold
+(array_size_definition) @fold
+(array_type) @fold
+(assignment_list) @fold
+(block) @fold
+(comment_statement) @fold
+(create_function) @fold
+(create_sequence) @fold
+(create_table) @fold
+(create_view) @fold
+(drop_sequence) @fold
+(function_body) @fold
+(function_declaration) @fold
+(grant_statement) @fold
+(list) @fold
+(procedure_body) @fold
+(reset_statement) @fold
+(revoke_statement) @fold
+(set_statement) @fold
+(statement) @fold
+(var_declarations) @fold
+(while_statement) @fold

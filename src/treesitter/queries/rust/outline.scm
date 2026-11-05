@@ -1,0 +1,11 @@
+; Lightdown queries for the pinned rust grammar.
+((function_item name: (_) @name) @item (#set! kind "function"))
+((function_signature_item name: (_) @name) @item (#set! kind "function"))
+((macro_definition name: (_) @name) @item (#set! kind "function"))
+((struct_item name: (_) @name) @item (#set! kind "type"))
+((enum_item name: (_) @name) @item (#set! kind "type"))
+((union_item name: (_) @name) @item (#set! kind "type"))
+((trait_item name: (_) @name) @item (#set! kind "type"))
+((mod_item name: (_) @name) @item (#set! kind "type"))
+((impl_item !trait "impl" @context type: (_) @name) @item)
+((impl_item "impl" @context trait: (_) @context "for" @context type: (_) @name) @item)

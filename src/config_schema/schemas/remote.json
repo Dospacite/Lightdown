@@ -1,0 +1,28 @@
+{
+  "description": "Run the terminal on another machine over SSH.",
+  "schema": {
+    "type": "object",
+    "required": ["host", "path"],
+    "properties": {
+      "host": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?:[A-Za-z0-9._][A-Za-z0-9._-]*)?(?:@[A-Za-z0-9._-]*)?$",
+        "patternMessage": "use an SSH config host alias or user@host; set ports and keys in ~/.ssh/config",
+        "description": "An SSH config host alias, or user@host."
+      },
+      "path": {
+        "type": "string",
+        "pattern": "^/(?:(?:[^/\\p{Cc}.][^/\\p{Cc}]*|\\.|\\.[^/\\p{Cc}.][^/\\p{Cc}]*|\\.\\.[^/\\p{Cc}]+)?(?:/|$))*$",
+        "patternMessage": "must be an absolute path, without .. or control characters",
+        "description": "The project's absolute path on the remote machine."
+      },
+      "pushOnSave": {
+        "type": "boolean",
+        "default": false,
+        "description": "Copy each saved file to the remote folder with rsync."
+      }
+    }
+  },
+  "example": {"host": "user@build-machine", "path": "/srv/project"}
+}

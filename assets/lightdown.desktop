@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Lightdown
+GenericName=Text Editor
+Comment=Lightweight editor for markdown, LaTeX, Python and notebooks, with an AI agent
+Exec=lightdown %f
+Icon=lightdown
+Terminal=false
+Categories=Utility;TextEditor;
+MimeType=text/markdown;text/x-markdown;text/plain;text/x-python;application/x-ipynb+json;text/x-tex;application/pdf;
+Keywords=markdown;md;editor;viewer;notes;text;python;notebook;jupyter;ipynb;latex;tex;pdf;agent;
+StartupWMClass=lightdown

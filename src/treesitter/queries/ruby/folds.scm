@@ -1,0 +1,23 @@
+; Lightdown queries for the pinned ruby grammar.
+(argument_list) @fold
+(array) @fold
+(array_pattern) @fold
+(begin_block) @fold
+(block) @fold
+(block_argument) @fold
+(block_body) @fold
+(block_parameter) @fold
+(block_parameters) @fold
+(body_statement) @fold
+(class) @fold
+(do_block) @fold
+(end_block) @fold
+(heredoc_body) @fold
+(left_assignment_list) @fold
+(method) @fold
+(module) @fold
+(parenthesized_statements) @fold
+(right_assignment_list) @fold
+(singleton_method) @fold
+(string_array) @fold
+(symbol_array) @fold

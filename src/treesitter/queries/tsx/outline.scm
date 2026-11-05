@@ -1,0 +1,11 @@
+; Lightdown queries for the pinned tsx grammar.
+((function_declaration name: (_) @name) @item (#set! kind "function"))
+((generator_function_declaration name: (_) @name) @item (#set! kind "function"))
+((method_definition name: (_) @name) @item (#set! kind "function"))
+((class_declaration name: (_) @name) @item (#set! kind "type"))
+((class name: (_) @name) @item (#set! kind "type"))
+((module name: (_) @name) @item (#set! kind "type"))
+((interface_declaration name: (_) @name) @item (#set! kind "type"))
+((enum_declaration name: (_) @name) @item (#set! kind "type"))
+((internal_module name: (_) @name) @item (#set! kind "type"))
+((variable_declarator name: (_) @name value: [(arrow_function) (function_expression)]) @item (#set! kind "function"))

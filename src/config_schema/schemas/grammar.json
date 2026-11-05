@@ -1,0 +1,21 @@
+{
+  "description": "A local LanguageTool server for grammar and style checks.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "default": "http://127.0.0.1:8081",
+        "pattern": "^http://(?:localhost|127\\.0\\.0\\.1|\\[::1\\]):(?:6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})/*$",
+        "patternMessage": "must be a local HTTP host and port, such as http://127.0.0.1:8081",
+        "description": "The LanguageTool server: http:// with localhost, 127.0.0.1 or [::1] and a port."
+      },
+      "language": {
+        "type": "string",
+        "default": "auto",
+        "description": "The language to check, such as en-US, or auto to detect it."
+      }
+    }
+  },
+  "example": {"url": "http://127.0.0.1:8081", "language": "en-US"}
+}

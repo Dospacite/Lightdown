@@ -1,0 +1,27 @@
+{
+  "description": "Language server commands, by file extension or language ID.",
+  "schema": {
+    "type": "object",
+    "additionalProperties": {
+      "description": "A server command as an argument array, an object with command and languageId, or false to turn the server off.",
+      "anyOf": [
+        {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        {
+          "type": "object",
+          "required": ["command"],
+          "properties": {
+            "command": {"type": "array", "minItems": 1, "items": {"type": "string"}, "description": "The server's command and arguments, with no shell expansion."},
+            "languageId": {"type": "string", "description": "The language ID sent to the server."}
+          }
+        },
+        {"type": ["boolean", "null"], "enum": [false, null]}
+      ]
+    }
+  },
+  "example": {
+    "rust": ["rust-analyzer"],
+    "py": {"languageId": "python", "command": ["ruff", "server"]},
+    "md": {"languageId": "markdown", "command": ["marksman", "server"]},
+    "sh": {"languageId": "shellscript", "command": ["bash-language-server", "start"]}
+  }
+}

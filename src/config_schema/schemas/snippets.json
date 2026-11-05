@@ -1,0 +1,29 @@
+{
+  "description": "Snippets by file extension; project snippets win over user snippets with the same prefix.",
+  "schema": {
+    "type": "object",
+    "propertyNames": {"pattern": "^[^.]", "patternMessage": "use the extension without a dot, such as rs"},
+    "additionalProperties": {
+      "type": "array",
+      "description": "The snippets for files with this extension; txt for files without one.",
+      "items": {
+        "type": "object",
+        "required": ["prefix", "body"],
+        "properties": {
+          "prefix": {"type": "string", "description": "What to type before choosing the snippet."},
+          "body": {
+            "description": "The template, as a string or an array of lines. $1, ${1:default} and ${1|a,b|} are stops; $0 is the end.",
+            "anyOf": [
+              {"type": "string", "x-snippet": true},
+              {"type": "array", "items": {"type": "string"}}
+            ]
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "rs": [{"prefix": "fun", "body": "fn ${1:name}() {\n    $0\n}"}],
+    "py": [{"prefix": "defn", "body": ["def ${1:name}(${2:args}):", "    $0"]}]
+  }
+}

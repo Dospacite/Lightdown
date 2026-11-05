@@ -1,0 +1,89 @@
+{
+  "description": "Settings for this project, over the user's.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "language_servers": {"type":"object", "description":"Server configuration by LSP language ID.", "additionalProperties":{"anyOf":[{"type":"boolean"},{"type":"object","properties":{"command":{"type":"string"},"args":{"type":"array","items":{"type":"string"}},"initialization_options":{},"settings":{}},"additionalProperties":false}]}},
+      "font_size": {
+        "type": "number",
+        "minimum": 8,
+        "description": "The documents' font size in pixels for this project, from 8 to 40.",
+        "maximum": 40
+      },
+      "ruler": {
+        "type": "integer",
+        "enum": [
+          0,
+          80,
+          100
+        ],
+        "description": "The column of the ruler in code; 0 hides it."
+      },
+      "code_actions_on_save": {
+        "type": "array",
+        "maxItems": 32,
+        "items": {"type": "string", "description": "A code action kind, such as source.organizeImports or source.fixAll."},
+        "description": "Code action kinds the language server applies before each save in this project."
+      },
+      "check": {
+        "anyOf": [
+          {"type": "string", "minLength": 1, "pattern": "\\S", "patternMessage": "must not be blank"},
+          {"type": "array", "minItems": 1, "maxItems": 64, "items": {"type": "string"}}
+        ],
+        "description": "A command the agent runs after a turn that changed files; a failure goes back to it. A shell command line, or an argv array."
+      },
+      "check_attempts": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 10,
+        "default": 2,
+        "description": "How many times a failing check goes back to the agent in one turn."
+      },
+      "auto_save": {
+        "type": "string",
+        "description": "Save the active file by itself: off, on focus loss, or a second after typing stops.",
+        "enum": [
+          "off",
+          "on_focus_loss",
+          "after_delay"
+        ]
+      },
+      "format_on_save": {
+        "type": "boolean",
+        "description": "Run the formatter when saving."
+      },
+      "formatters": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string",
+          "description": "A shell command that reads the file on stdin and writes it formatted to stdout; empty turns formatting off for the extension."
+        },
+        "description": "Formatter commands by file extension, over the built-in ones."
+      },
+      "spell_dictionary": {
+        "type": "string",
+        "description": "A hunspell dictionary name such as en_GB, or a .dic path without its extension; empty uses the session's language."
+      },
+      "latex_engine": {
+        "type": "string",
+        "description": "The TeX engine: auto, tectonic, latexmk, xelatex, lualatex, pdflatex, or a program's path."
+      },
+      "model": {
+        "type": "string",
+        "description": "The agent's default model in this project, until one is chosen."
+      }
+    }
+  },
+  "example": {
+    "font_size": 18,
+    "ruler": 100,
+    "format_on_save": true,
+    "formatters": {
+      "py": "ruff format -",
+      "rs": "rustfmt --emit stdout"
+    },
+    "spell_dictionary": "en_GB",
+    "latex_engine": "tectonic",
+    "model": "go/deepseek-v4.1-flash"
+  }
+}

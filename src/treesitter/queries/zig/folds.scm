@@ -1,0 +1,21 @@
+; Lightdown queries for the pinned zig grammar.
+(array_type) @fold
+(block) @fold
+(block_expression) @fold
+(block_label) @fold
+(comptime_statement) @fold
+(defer_statement) @fold
+(enum_declaration) @fold
+(errdefer_statement) @fold
+(expression_statement) @fold
+(for_statement) @fold
+(function_declaration) @fold
+(if_statement) @fold
+(initializer_list) @fold
+(labeled_statement) @fold
+(link_section) @fold
+(nosuspend_statement) @fold
+(suspend_statement) @fold
+(test_declaration) @fold
+(variable_declaration) @fold
+(while_statement) @fold

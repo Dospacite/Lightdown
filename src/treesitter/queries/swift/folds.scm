@@ -1,0 +1,26 @@
+; Lightdown queries for the pinned swift grammar.
+(array_literal) @fold
+(array_type) @fold
+(capture_list) @fold
+(capture_list_item) @fold
+(catch_block) @fold
+(class_body) @fold
+(class_declaration) @fold
+(control_transfer_statement) @fold
+(deprecated_operator_declaration_body) @fold
+(discard_statement) @fold
+(do_statement) @fold
+(enum_class_body) @fold
+(for_statement) @fold
+(function_body) @fold
+(function_declaration) @fold
+(guard_statement) @fold
+(if_statement) @fold
+(macro_definition) @fold
+(protocol_body) @fold
+(protocol_declaration) @fold
+(repeat_while_statement) @fold
+(statements) @fold
+(switch_statement) @fold
+(while_statement) @fold
+(willset_didset_block) @fold

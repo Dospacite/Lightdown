@@ -1,0 +1,43 @@
+{
+  "description": "MCP servers whose tools the agent can use.",
+  "schema": {
+    "type": "object",
+    "required": ["mcpServers"],
+    "properties": {
+      "mcpServers": {
+        "type": "object",
+        "maxProperties": 16,
+        "description": "The servers, by name; at most 16.",
+        "additionalProperties": {
+          "type": "object",
+          "x-one-of": ["command", "url"],
+          "description": "A server started as a command, or reached at a URL.",
+          "properties": {
+            "command": {"type": "string", "description": "The server program, started with its standard streams."},
+            "args": {"type": "array", "items": {"type": "string"}, "description": "The program's arguments."},
+            "env": {"type": "object", "additionalProperties": {"type": "string"}, "description": "Environment variables for the program."},
+            "url": {
+              "type": "string",
+              "pattern": "^https?://[^/@?#\\p{Cc}]+(?:[/?#][^\\p{Cc}]*)?$",
+              "patternMessage": "must be an http:// or https:// URL with a host and no user name",
+              "description": "A streamable HTTP server's URL."
+            },
+            "headers": {
+              "type": "object",
+              "propertyNames": {"pattern": "^[A-Za-z0-9-]+$", "patternMessage": "is not a valid header name"},
+              "additionalProperties": {"type": "string", "pattern": "^[^\\p{Cc}]*$", "patternMessage": "must not contain control characters"},
+              "description": "HTTP headers sent with each request, such as Authorization."
+            },
+            "autoConnect": {"type": "boolean", "default": false, "description": "Connect when the project opens, if Agent may run commands is Allow, instead of with Agent: Connect project MCP servers."},
+            "disabled": {"type": "boolean", "default": false, "description": "Leave the server out."}
+          }
+        }
+      }
+    }
+  },
+  "example": {
+    "mcpServers": {
+      "project-tools": {"command": "/absolute/path/to/mcp-server", "args": ["--stdio"], "env": {"SERVICE_MODE": "development"}}
+    }
+  }
+}

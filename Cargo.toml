@@ -1,0 +1,39 @@
+[package]
+name = "lightdown"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.89"
+license = "MIT"
+description = "A lightweight live-preview markdown, LaTeX, Python and notebook editor for Wayland, with an AI agent sidebar"
+
+[dependencies]
+smithay-client-toolkit = { version = "0.21", default-features = false, features = ["calloop", "xkbcommon"] }
+swash = { version = "0.2", default-features = false, features = ["std", "scale", "render"] }
+pulldown-cmark = { version = "0.13", default-features = false }
+zune-jpeg = { version = "0.5.15", default-features = false, features = ["std", "x86", "neon"] }
+zune-png = { version = "0.5.2", default-features = false, features = ["std", "sse"] }
+image-webp = { version = "0.2.4", default-features = false }
+gif = { version = "0.14.2", default-features = false, features = ["std"] }
+regex = { version = "1", default-features = false, features = ["std", "perf", "unicode"] }
+serde = "1"
+serde_json = "1"
+hayro = "0.8"
+resvg = { version = "0.48", default-features = false, features = ["text", "system-fonts", "memmap-fonts", "raster-images", "svgz"] }
+vte = { version = "0.15", default-features = false }
+libc = "0.2"
+flate2 = "1"
+tar = "0.4"
+tree-sitter = { version = "0.25", default-features = false, features = ["std"] }
+libloading = "0.8"
+unicode-bidi = "0.3"
+
+[profile.release]
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[features]
+# Headless rendering to an image, for development and tests.
+dump = []

@@ -1,0 +1,30 @@
+{
+  "description": "Shell commands added to the palette, with optional keys.",
+  "schema": {
+    "anyOf": [
+      {"type": "array", "x-unique": "name", "items": {"$ref": "command"}},
+      {
+        "type": "object",
+        "required": ["commands"],
+        "properties": {"commands": {"type": "array", "x-unique": "name", "items": {"$ref": "command"}, "description": "The commands."}}
+      }
+    ]
+  },
+  "definitions": {
+    "command": {
+      "type": "object",
+      "required": ["name", "command"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[^\\n]*\\S[^\\n]*$", "patternMessage": "must be one line, not blank", "description": "The name shown in the palette, unique in the file."},
+        "command": {"type": "string", "description": "Shell text; $FILE, $LINE and $SELECTION are set."},
+        "output": {"type": "string", "enum": ["replace", "insert", "show"], "default": "show", "description": "What happens to the output: replace the selection, insert it after the selection, or show it in a read-only tab."},
+        "key": {"type": "string", "pattern": "^(?:(?:ctrl|shift|alt)\\+)*(?:(?:ctrl|alt)\\+)(?:(?:ctrl|shift|alt)\\+)*(?:left|right|up|down|enter|tab|space|pageup|pagedown|f(?:[1-9]|1[0-2])|.)$|^(?:(?:ctrl|shift|alt)\\+)*f(?:[1-9]|1[0-2])$", "patternMessage": "must be a key such as ctrl+alt+k, with Ctrl, Alt or a function key", "description": "A key that runs the command, such as ctrl+alt+k."},
+        "keys": {"type": "array", "items": {"type": "string", "pattern": "^(?:(?:ctrl|shift|alt)\\+)*(?:(?:ctrl|alt)\\+)(?:(?:ctrl|shift|alt)\\+)*(?:left|right|up|down|enter|tab|space|pageup|pagedown|f(?:[1-9]|1[0-2])|.)$|^(?:(?:ctrl|shift|alt)\\+)*f(?:[1-9]|1[0-2])$", "patternMessage": "must be a key such as ctrl+alt+k, with Ctrl, Alt or a function key"}, "description": "Several keys that run the command; used when key is absent."}
+      }
+    }
+  },
+  "example": [
+    {"name": "Sort selection", "command": "printf '%s' \"$SELECTION\" | sort", "output": "replace", "key": "ctrl+alt+k"},
+    {"name": "File info", "command": "wc -l -- \"$FILE\"", "output": "show"}
+  ]
+}

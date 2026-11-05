@@ -1,0 +1,45 @@
+{
+  "description": "Contextual shortcuts in Zed keymap format; loaded on save, above the base keymap and legacy keys setting.",
+  "schema": {
+    "type": "array",
+    "x-keymap": true,
+    "items": {
+      "type": "object",
+      "required": [
+        "bindings"
+      ],
+      "properties": {
+        "context": {
+          "type": "string",
+          "description": "A focus context such as Editor && mode == source, Explorer, Terminal or Editor && vim_mode == normal. Most specific match wins."
+        },
+        "bindings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A stable command id from the palette, or null to unbind this sequence in this context."
+          },
+          "description": "Keystrokes separated by spaces, such as ctrl-k ctrl-s. Modifiers use hyphens or legacy plus signs."
+        }
+      }
+    }
+  },
+  "example": [
+    {
+      "context": "Editor",
+      "bindings": {
+        "ctrl-k ctrl-s": "save",
+        "ctrl-k ctrl-o": "keymap_open"
+      }
+    },
+    {
+      "context": "Explorer",
+      "bindings": {
+        "r": "rename"
+      }
+    }
+  ]
+}
